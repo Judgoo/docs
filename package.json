@@ -5,7 +5,8 @@
   "author": "Artin <lengthmin@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "hugo server"
+    "dev": "hugo server",
+    "theme": "git submodule update --init --recursive --depth 1"
   },
   "devDependencies": {
     "hugo-extended": "^0.81.0"
