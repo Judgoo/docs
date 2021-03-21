@@ -1,0 +1,13 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Artin <lengthmin@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "hugo server"
+  },
+  "devDependencies": {
+    "hugo-extended": "^0.81.0"
+  }
+}
