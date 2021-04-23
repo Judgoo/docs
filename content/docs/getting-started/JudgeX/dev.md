@@ -1,10 +1,9 @@
 ---
-title: Without ToC
+title: 开发 | JudgeX
 weight: 2
-bookToc: false
 ---
 
-# At me ipso nepotibus nunc celebratior genus
+# 开发
 
 ## Tanto oblite
 
