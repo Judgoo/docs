@@ -1,0 +1,43 @@
+<!doctype html><html lang=en dir=ltr><head><meta name=generator content="Hugo 0.82.1"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Judger #  Judger 是我们的判题容器入口，帮忙在容器内编译用户代码，执行用户程序，举个例子：
+它会根据 judger.yml 配置文件的内容来执行相应动作的工具。
+工作流程 #  解析 judger.yml：
+ 根据 language 下载 preset 根据 env 配置设置环境变量 执行 build 阶段（编译用户代码） 执行 run 阶段，运行所有测试用例  根据 run 结果执行操作：
+ 输出所有测试用例的结果 将结果回调到规定的 callback 接口上  结果 #  [ { &#34;status&#34;: &#34;done&#34;, &#34;message&#34;: &#34;&#34;, &#34;result&#34;: { &#34;status&#34;: 0, &#34;cpu_time_used&#34;: 1, &#34;cpu_time_used_us&#34;: 1223, &#34;real_time_used&#34;: 5, &#34;real_time_used_us&#34;: 5201, &#34;memory_used&#34;: 1488, &#34;signal&#34;: 0, &#34;exit_code&#34;: 0 } }, { &#34;status&#34;: &#34;done&#34;, &#34;message&#34;: &#34;&#34;, &#34;result&#34;: { &#34;status&#34;: 0, &#34;cpu_time_used&#34;: 1, &#34;cpu_time_used_us&#34;: 968, &#34;real_time_used&#34;: 1, &#34;real_time_used_us&#34;: 1210, &#34;memory_used&#34;: 1588, &#34;signal&#34;: 0, &#34;exit_code&#34;: 0 } } ] 可以看到，Judger 的输出是一个数组，图中的例子就是输出判断 c 语言的两个测试用例的结果。"><meta name=theme-color content="#FFFFFF"><meta property="og:title" content><meta property="og:description" content><meta property="og:type" content="website"><meta property="og:url" content="https://Judgoo.kelab.dev/docs/getting-started/Judger/"><title>Judger | Judgoo Docs</title><link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png type=image/x-icon><link rel=stylesheet href=/book.min.2bc2364a4a4b31f0ec1debecf0a8f90a840821f143dfe1ac6a0f7cbcbdcf64ac.css integrity="sha256-K8I2SkpLMfDsHevs8Kj5CoQIIfFD3+Gsag98vL3PZKw="><script defer src=/en.search.min.7934d9080fe9477ecb4410bb14e93705fb99cdf6dec6b5157536104dfc6a9e19.js integrity="sha256-eTTZCA/pR37LRBC7FOk3BfuZzfbexrUVdTYQTfxqnhk="></script><script defer src=/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js integrity="sha256-b2+Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC+NdcPIvZhzk="></script><link rel=alternate type=application/rss+xml href=https://Judgoo.kelab.dev/docs/getting-started/Judger/index.xml title="Judgoo Docs"></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a href=/><span>Judgoo Docs</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=Search aria-label=Search maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul><li><a href=/docs/overview/><strong>概览</strong></a></li><li><a href=/docs/getting-started/><strong>开始使用</strong></a></li><li><a href=/docs/getting-started/JudgeX/>JudgeX</a><ul><li><a href=/docs/getting-started/JudgeX/API/>API</a></li></ul></li><li><a href=/docs/getting-started/Judger/ class=active>Judger</a><ul><li><a href=/docs/getting-started/Judger/judger_yml/>judger.yml</a></li></ul></li></ul><p></p><ul><li><a href=/docs/others/><strong>其他</strong></a></li></ul><p></p><ul><li><a href=/posts/>Blog</a></li></ul></nav><script>(function(){var a=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label>
+<strong>Judger</strong>
+<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><a href=#工作流程>工作流程</a></li><li><a href=#结果>结果</a></li></ul></nav></aside></header><article class=markdown><h1 id=judger>Judger
+<a class=anchor href=#judger>#</a></h1><p>Judger 是我们的判题容器入口，帮忙在容器内编译用户代码，执行用户程序，举个例子：</p><p>它会根据 <code>judger.yml</code> 配置文件的内容来执行相应动作的工具。</p><h2 id=工作流程>工作流程
+<a class=anchor href=#%e5%b7%a5%e4%bd%9c%e6%b5%81%e7%a8%8b>#</a></h2><p>解析 judger.yml：</p><ol><li>根据 <code>language</code> 下载 preset</li><li>根据 <code>env</code> 配置设置环境变量</li><li>执行 <code>build</code> 阶段（编译用户代码）</li><li>执行 <code>run</code> 阶段，运行所有测试用例</li></ol><p>根据 run 结果执行操作：</p><ol><li>输出所有测试用例的结果</li><li>将结果回调到规定的 callback 接口上</li></ol><h2 id=结果>结果
+<a class=anchor href=#%e7%bb%93%e6%9e%9c>#</a></h2><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>[
+    {
+        <span style=color:#f92672>&#34;status&#34;</span>: <span style=color:#e6db74>&#34;done&#34;</span>,
+        <span style=color:#f92672>&#34;message&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>,
+        <span style=color:#f92672>&#34;result&#34;</span>: {
+            <span style=color:#f92672>&#34;status&#34;</span>: <span style=color:#ae81ff>0</span>,
+            <span style=color:#f92672>&#34;cpu_time_used&#34;</span>: <span style=color:#ae81ff>1</span>,
+            <span style=color:#f92672>&#34;cpu_time_used_us&#34;</span>: <span style=color:#ae81ff>1223</span>,
+            <span style=color:#f92672>&#34;real_time_used&#34;</span>: <span style=color:#ae81ff>5</span>,
+            <span style=color:#f92672>&#34;real_time_used_us&#34;</span>: <span style=color:#ae81ff>5201</span>,
+            <span style=color:#f92672>&#34;memory_used&#34;</span>: <span style=color:#ae81ff>1488</span>,
+            <span style=color:#f92672>&#34;signal&#34;</span>: <span style=color:#ae81ff>0</span>,
+            <span style=color:#f92672>&#34;exit_code&#34;</span>: <span style=color:#ae81ff>0</span>
+        }
+    },
+    {
+        <span style=color:#f92672>&#34;status&#34;</span>: <span style=color:#e6db74>&#34;done&#34;</span>,
+        <span style=color:#f92672>&#34;message&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>,
+        <span style=color:#f92672>&#34;result&#34;</span>: {
+            <span style=color:#f92672>&#34;status&#34;</span>: <span style=color:#ae81ff>0</span>,
+            <span style=color:#f92672>&#34;cpu_time_used&#34;</span>: <span style=color:#ae81ff>1</span>,
+            <span style=color:#f92672>&#34;cpu_time_used_us&#34;</span>: <span style=color:#ae81ff>968</span>,
+            <span style=color:#f92672>&#34;real_time_used&#34;</span>: <span style=color:#ae81ff>1</span>,
+            <span style=color:#f92672>&#34;real_time_used_us&#34;</span>: <span style=color:#ae81ff>1210</span>,
+            <span style=color:#f92672>&#34;memory_used&#34;</span>: <span style=color:#ae81ff>1588</span>,
+            <span style=color:#f92672>&#34;signal&#34;</span>: <span style=color:#ae81ff>0</span>,
+            <span style=color:#f92672>&#34;exit_code&#34;</span>: <span style=color:#ae81ff>0</span>
+        }
+    }
+]
+</code></pre></div><p>可以看到，Judger 的输出是一个数组，图中的例子就是输出判断 c 语言的两个测试用例的结果。</p><p>每一项的 stdout 就是 runner 运行的判题结果。status 0 就是题目 AC 的意思。</p></article><footer class=book-footer><div class="flex flex-wrap justify-between"><div><a class="flex align-center" href=https://github.com/alex-shpak/hugo-book/commit/d5c57c45d66ac0a15c38424108ab6a21d0150c98 title="Last modified by lengthmin | Apr 23, 2021" target=_blank rel=noopener><img src=/svg/calendar.svg class=book-icon alt=Calendar>
+<span>Apr 23, 2021</span></a></div><div><a class="flex align-center" href=https://github.com/alex-shpak/hugo-book/edit/master/exampleSite/content/docs/getting-started/Judger/_index.md target=_blank rel=noopener><img src=/svg/edit.svg class=book-icon alt=Edit>
+<span>Edit this page</span></a></div></div></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><a href=#工作流程>工作流程</a></li><li><a href=#结果>结果</a></li></ul></nav></div></aside></main></body></html>
